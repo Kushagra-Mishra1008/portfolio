@@ -18,7 +18,7 @@ export default function ProjectCard({ project, index }) {
       <div className="border-b-2 border-ink">
         <ProjectShot
           project={project}
-          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          sizes="(max-width: 768px) 100vw, 50vw"
         />
       </div>
 

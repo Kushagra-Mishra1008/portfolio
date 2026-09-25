@@ -6,7 +6,7 @@ import { projects } from "@/content/projects";
 export const metadata = {
   title: "Projects",
   description:
-    "A transformer built from scratch, a retrieval platform, and a media library — each one shipped and documented.",
+    "A multi-agent code review system, a transformer built from scratch, a retrieval platform, and a media library — each one shipped and documented.",
 };
 
 export default function ProjectsPage() {
@@ -22,9 +22,10 @@ export default function ProjectsPage() {
         </h1>
 
         <p className="mt-8 max-w-[56ch] text-[17px] leading-relaxed text-mute">
-          A transformer written from first principles, a retrieval platform for
-          documents, and a media library with a Spring Boot backend — each one
-          shipped, running, and open source.
+          A multi-agent system that reviews pull requests, a transformer
+          written from first principles, a retrieval platform for documents,
+          and a media library with a Spring Boot backend — each one shipped,
+          measured, and open source.
         </p>
 
         <div className="mt-8 divide-y-2 divide-ink border-t-2 border-ink">
