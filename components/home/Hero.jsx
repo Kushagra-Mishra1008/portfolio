@@ -3,13 +3,14 @@ import NeuralAnchor from "./NeuralAnchor";
 import Window from "@/components/ui/Window";
 import Container from "@/components/ui/Container";
 import { site } from "@/content/site";
+import EmailButton from "@/components/ui/EmailButton";
 
 const boot = [
   ["name", "Kushagra Mishra"],
   ["role", "Software / AI engineer"],
   ["open_to", site.roles.join(" · ")],
   ["edu", "B.Tech CSE, VIT — 2026"],
-  ["prev", "AI Eng Intern, Tech Mahindra"],
+  ["prev", "SWE Intern (AI), Tech Mahindra"],
 ];
 
 export default function Hero() {
@@ -46,9 +47,7 @@ export default function Hero() {
             <Link href={site.resumeUrl} className="btn">
               Résumé
             </Link>
-            <Link href={`mailto:${site.email}`} className="btn btn-dark">
-              Email me
-            </Link>
+            <EmailButton className="btn btn-dark">Email me</EmailButton>
           </div>
         </div>
 

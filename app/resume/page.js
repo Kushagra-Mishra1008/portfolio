@@ -7,7 +7,7 @@ import { site } from "@/content/site";
 export const metadata = {
   title: "Résumé",
   description:
-    "Résumé for Kushagra Mishra — software & AI engineer, VIT CS graduate, former AI engineering intern at Tech Mahindra.",
+    "Résumé for Kushagra Mishra — software & AI engineer, VIT CS graduate, former software engineering intern (AI) at Tech Mahindra.",
 };
 
 export default function ResumePage() {

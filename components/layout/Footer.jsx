@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { site, nav, socials } from "@/content/site";
+import EmailButton from "@/components/ui/EmailButton";
 
 const pages = [{ href: "/", label: "Home" }, ...nav];
 
@@ -33,9 +34,9 @@ export default function Footer() {
               to reach me is email.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <Link href={`mailto:${site.email}`} className="btn btn-primary">
+              <EmailButton className="btn btn-primary">
                 {site.email}
-              </Link>
+              </EmailButton>
             </div>
           </div>
 

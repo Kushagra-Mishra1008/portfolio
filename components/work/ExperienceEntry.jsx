@@ -1,4 +1,41 @@
 import Window from "@/components/ui/Window";
+import Pill from "@/components/ui/Pill";
+
+function Group({ group }) {
+  return (
+    <div
+      className={
+        group.highlight
+          ? "border-2 border-ink bg-crt p-5 text-phosphor shadow-[var(--shadow-hard-sm)]"
+          : "border-2 border-ink p-5"
+      }
+    >
+      <h3
+        className={`inline-block px-2 py-0.5 font-mono text-[11px] font-bold tracking-[0.14em] uppercase ${
+          group.highlight ? "bg-accent text-ink" : "bg-ink text-paper"
+        }`}
+      >
+        {group.label}
+      </h3>
+      <ul className="mt-4 space-y-3">
+        {group.bullets.map((bullet) => (
+          <li key={bullet} className="flex gap-3">
+            <span className="font-mono text-[13px] font-bold leading-relaxed text-accent">
+              ▸
+            </span>
+            <span
+              className={`max-w-[66ch] text-[15px] leading-relaxed ${
+                group.highlight ? "font-mono text-[14px]" : ""
+              }`}
+            >
+              {bullet}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 export default function ExperienceEntry({ role }) {
   return (
@@ -21,25 +58,31 @@ export default function ExperienceEntry({ role }) {
       <div>
         <h2 className="pixel text-[40px] leading-[0.95]">
           {role.title}
-          <span className="text-mute"> · {role.org}</span>
+          {role.focus && (
+            <span className="hl ml-3 text-[0.8em]">{role.focus}</span>
+          )}
         </h2>
+        <p className="mt-2 font-mono text-[14px] font-medium text-mute">
+          {role.org}
+        </p>
 
-        <p className="mt-3 max-w-[62ch] text-[16px] leading-relaxed text-mute">
+        <p className="mt-4 max-w-[62ch] text-[16px] leading-relaxed">
           {role.summary}
         </p>
 
-        <ul className="mt-6 space-y-3">
-          {role.bullets.map((bullet) => (
-            <li key={bullet} className="flex gap-3">
-              <span className="font-mono text-[13px] font-bold leading-relaxed text-accent">
-                ▸
-              </span>
-              <span className="max-w-[66ch] text-[15px] leading-relaxed">
-                {bullet}
-              </span>
-            </li>
+        {role.stack && (
+          <div className="mt-5 flex flex-wrap gap-2">
+            {role.stack.map((tech) => (
+              <Pill key={tech}>{tech}</Pill>
+            ))}
+          </div>
+        )}
+
+        <div className="mt-7 space-y-4">
+          {role.groups.map((group) => (
+            <Group key={group.label} group={group} />
           ))}
-        </ul>
+        </div>
       </div>
     </Window>
   );

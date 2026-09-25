@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { site, nav } from "@/content/site";
 import Clock from "./Clock";
+import EmailButton from "@/components/ui/EmailButton";
 
 function NavItem({ item, active }) {
   return (
@@ -73,9 +74,7 @@ export default function Header() {
           <span className="hidden sm:block">
             <Clock />
           </span>
-          <Link href={`mailto:${site.email}`} className="btn btn-primary btn-sm">
-            Hire me
-          </Link>
+          <EmailButton className="btn btn-primary btn-sm">Hire me</EmailButton>
         </div>
       </div>
 

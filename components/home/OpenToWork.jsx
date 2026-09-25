@@ -3,6 +3,7 @@ import Eyebrow from "@/components/ui/Eyebrow";
 import Container from "@/components/ui/Container";
 import Window from "@/components/ui/Window";
 import { site } from "@/content/site";
+import EmailButton from "@/components/ui/EmailButton";
 
 export default function OpenToWork() {
   return (
@@ -17,9 +18,9 @@ export default function OpenToWork() {
                 Graduated. <span className="hl">Open to work.</span>
               </h2>
               <p className="mt-6 max-w-[56ch] text-[16px] leading-relaxed text-mute">
-                B.Tech in Computer Science from VIT, class of 2026, with an AI
-                engineering internship at Tech Mahindra&apos;s Makers Lab behind
-                me. I&apos;m looking for my first full-time role and I&apos;m
+                B.Tech in Computer Science from VIT, class of 2026, with a software
+                engineering internship on AI at Tech Mahindra&apos;s Makers Lab
+                behind me. I&apos;m looking for my first full-time role and I&apos;m
                 happy anywhere between the model and the product.
               </p>
 
@@ -33,9 +34,9 @@ export default function OpenToWork() {
             </div>
 
             <div className="flex flex-col gap-3 sm:flex-row lg:flex-col lg:items-stretch">
-              <Link href={`mailto:${site.email}`} className="btn btn-primary justify-center">
+              <EmailButton className="btn btn-primary justify-center">
                 Email me →
-              </Link>
+              </EmailButton>
               <Link href={site.resumeUrl} className="btn justify-center">
                 View résumé
               </Link>
