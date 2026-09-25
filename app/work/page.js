@@ -7,7 +7,7 @@ import { roles, education, certifications } from "@/content/experience";
 export const metadata = {
   title: "Work",
   description:
-    "AI engineering internship at Tech Mahindra's Makers Lab, and a B.Tech in computer science from VIT.",
+    "Software engineering internship (AI) at Tech Mahindra's Makers Lab, and a B.Tech in computer science from VIT.",
 };
 
 export default function WorkPage() {
@@ -23,9 +23,9 @@ export default function WorkPage() {
         </h1>
 
         <p className="mt-8 max-w-[54ch] text-[17px] leading-relaxed text-mute">
-          Enterprise agentic systems at Tech Mahindra, transformers from
-          scratch on my own time, and a computer science degree tying the two
-          together.
+          An AI assistant I built end to end at Tech Mahindra — pipeline,
+          backend, frontend and deployment — plus a computer science degree
+          and a habit of building models from scratch on my own time.
         </p>
 
         <div className="mt-14 space-y-8">
