@@ -1,12 +1,13 @@
 export const site = {
   wordmark: "kushagra",
-  tagline: "AI/ML engineer, India",
-  availability: "Available from August 2026",
+  tagline: "Software & AI engineer · India",
+  availability: "Open to work",
+  roles: ["AI / ML Engineer", "Backend", "Full-stack", "SDE"],
   resumeUrl: "/resume",
   resumeFile: "/Kushagra-Mishra-Resume.pdf",
-  email: "you@example.com",
+  email: "mkush526@gmail.com",
   repoUrl: "https://github.com/Kushagra-Mishra1008/portfolio",
-  buildStamp: "v2 · Next · Tailwind",
+  buildStamp: "v3 · Next · Tailwind",
 };
 
 export const nav = [

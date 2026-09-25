@@ -1,54 +1,73 @@
-import { Hanken_Grotesk, JetBrains_Mono } from "next/font/google";
+import { ViewTransition } from "react";
+import { IBM_Plex_Mono, IBM_Plex_Sans, VT323 } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
-const hanken = Hanken_Grotesk({
+const pixel = VT323({
   subsets: ["latin"],
-  weight: ["400", "500", "700", "800"],
-  variable: "--font-hanken",
+  weight: "400",
+  variable: "--font-vt323",
   display: "swap",
 });
 
-const jetbrains = JetBrains_Mono({
+const plexSans = IBM_Plex_Sans({
   subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-jetbrains",
+  weight: ["400", "500", "700"],
+  variable: "--font-plex-sans",
   display: "swap",
 });
+
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--font-plex-mono",
+  display: "swap",
+});
+
+const description =
+  "Software engineer and VIT CS graduate. I build transformers from scratch and the backends and products around them. Open to AI/ML, backend, full-stack and SDE roles.";
 
 export const metadata = {
   metadataBase: new URL("https://kushagra.dev"),
   title: {
-    default: "Kushagra — AI/ML engineer",
+    default: "Kushagra — Software & AI engineer",
     template: "%s — Kushagra",
   },
-  description:
-    "Final-year CS student and AI engineering intern. I build transformers from scratch and the products around them.",
+  description,
   openGraph: {
     type: "website",
     siteName: "Kushagra",
-    title: "Kushagra — AI/ML engineer",
-    description:
-      "Final-year CS student and AI engineering intern. I build transformers from scratch and the products around them.",
+    title: "Kushagra — Software & AI engineer",
+    description,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Kushagra — AI/ML engineer",
-    description:
-      "Final-year CS student and AI engineering intern. I build transformers from scratch and the products around them.",
+    title: "Kushagra — Software & AI engineer",
+    description,
   },
+};
+
+export const viewport = {
+  themeColor: "#E4DFD1",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${hanken.variable} ${jetbrains.variable}`}
+      className={`${pixel.variable} ${plexSans.variable} ${plexMono.variable}`}
     >
-      <body className="bg-ink text-bone">
+      <body className="desk flex min-h-dvh flex-col">
+        <a href="#content" className="skip-link">
+          Skip to content
+        </a>
         <Header />
-        <main>{children}</main>
+        <ViewTransition default="page">
+          <main id="content" className="flex-1">
+            {children}
+          </main>
+        </ViewTransition>
         <Footer />
       </body>
     </html>

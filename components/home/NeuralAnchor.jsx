@@ -40,8 +40,8 @@ export default function NeuralAnchor() {
       "(prefers-reduced-motion: reduce)"
     ).matches;
 
-    const ember = hexToRgb(readToken("--color-ember", "#E8622A"));
-    const soft = hexToRgb(readToken("--color-ember-soft", "#FF9A5C"));
+    const amber = hexToRgb(readToken("--color-phosphor", "#FFB23F"));
+    const hot = hexToRgb(readToken("--color-accent", "#FF5A1F"));
     const rgba = (c, a) => `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${a})`;
 
     let width = 0;
@@ -96,11 +96,9 @@ export default function NeuralAnchor() {
     }
 
     function drawEdges() {
+      ctx.lineWidth = 1;
       for (const edge of edges) {
-        ctx.strokeStyle = `rgba(140, 132, 126, ${
-          0.05 + Math.abs(edge.w) * 0.09
-        })`;
-        ctx.lineWidth = 0.5;
+        ctx.strokeStyle = rgba(amber, 0.07 + Math.abs(edge.w) * 0.12);
         ctx.beginPath();
         ctx.moveTo(edge.from.x, edge.from.y);
         ctx.lineTo(edge.to.x, edge.to.y);
@@ -108,36 +106,25 @@ export default function NeuralAnchor() {
       }
     }
 
+    // Square "pixel" neurons — cheaper than arcs and fits the CRT look.
     function drawNode(node) {
       const v = Math.min(1, node.a);
-      const r = 3.4 + v * 5.2;
+      const r = Math.round(5 + v * 4);
 
-      ctx.fillStyle = "#161616";
-      ctx.beginPath();
-      ctx.arc(node.x, node.y, r + 3, 0, Math.PI * 2);
-      ctx.fill();
+      ctx.fillStyle = "#0E0D0B";
+      ctx.fillRect(node.x - r - 2, node.y - r - 2, (r + 2) * 2, (r + 2) * 2);
 
-      ctx.strokeStyle = "rgba(110, 106, 100, 0.6)";
-      ctx.lineWidth = 0.5;
-      ctx.beginPath();
-      ctx.arc(node.x, node.y, r, 0, Math.PI * 2);
-      ctx.stroke();
+      ctx.strokeStyle = rgba(amber, 0.55);
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(node.x - r, node.y - r, r * 2, r * 2);
 
       if (v > 0.015) {
-        ctx.fillStyle = rgba(ember, v * 0.3);
-        ctx.beginPath();
-        ctx.arc(node.x, node.y, r + 5.5, 0, Math.PI * 2);
-        ctx.fill();
-
-        ctx.fillStyle = rgba(ember, Math.min(1, v * 1.15));
-        ctx.beginPath();
-        ctx.arc(node.x, node.y, r, 0, Math.PI * 2);
-        ctx.fill();
-
-        ctx.fillStyle = rgba(soft, Math.min(1, v * 0.95));
-        ctx.beginPath();
-        ctx.arc(node.x, node.y, r * 0.42, 0, Math.PI * 2);
-        ctx.fill();
+        ctx.fillStyle = rgba(amber, Math.min(1, v * 1.1));
+        ctx.fillRect(node.x - r, node.y - r, r * 2, r * 2);
+        if (v > 0.5) {
+          ctx.fillStyle = rgba(hot, v);
+          ctx.fillRect(node.x - r / 2, node.y - r / 2, r, r);
+        }
       }
     }
 
@@ -173,17 +160,15 @@ export default function NeuralAnchor() {
         const bx = from.x + (to.x - from.x) * tail;
         const by = from.y + (to.y - from.y) * tail;
 
-        ctx.strokeStyle = rgba(ember, Math.min(1, pulse.s * 2.4));
-        ctx.lineWidth = 1.6;
+        ctx.strokeStyle = rgba(amber, Math.min(1, pulse.s * 2.4));
+        ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.moveTo(bx, by);
         ctx.lineTo(px, py);
         ctx.stroke();
 
-        ctx.fillStyle = rgba(soft, Math.min(1, pulse.s * 3));
-        ctx.beginPath();
-        ctx.arc(px, py, 2.4, 0, Math.PI * 2);
-        ctx.fill();
+        ctx.fillStyle = rgba(hot, Math.min(1, pulse.s * 3));
+        ctx.fillRect(px - 2.5, py - 2.5, 5, 5);
       }
 
       for (const layer of layers) {
@@ -198,7 +183,27 @@ export default function NeuralAnchor() {
         if (d < 28 && node.a < 0.3) fire(node, 0.7);
       }
 
-      raf = requestAnimationFrame(frame);
+      raf = running ? requestAnimationFrame(frame) : null;
+    }
+
+    // Only animate while on screen and the tab is visible.
+    let onScreen = false;
+    let running = false;
+
+    function sync() {
+      const should = onScreen && !document.hidden;
+      if (should === running) return;
+      running = should;
+      if (running) {
+        timer = setInterval(() => {
+          const first = layers[0];
+          fire(first[Math.floor(Math.random() * first.length)], 0.5);
+        }, 1700);
+        if (!raf) frame();
+      } else {
+        clearInterval(timer);
+        timer = null;
+      }
     }
 
     function onMove(e) {
@@ -219,6 +224,8 @@ export default function NeuralAnchor() {
       }
     }
 
+    let io = null;
+
     resize();
 
     const observer = new ResizeObserver(resize);
@@ -228,15 +235,18 @@ export default function NeuralAnchor() {
       canvas.addEventListener("pointermove", onMove);
       canvas.addEventListener("pointerleave", onLeave);
       canvas.addEventListener("click", onClick);
-      timer = setInterval(() => {
-        const first = layers[0];
-        fire(first[Math.floor(Math.random() * first.length)], 0.5);
-      }, 1700);
-      frame();
+      io = new IntersectionObserver(([entry]) => {
+        onScreen = entry.isIntersecting;
+        sync();
+      });
+      io.observe(canvas);
+      document.addEventListener("visibilitychange", sync);
     }
 
     return () => {
       observer.disconnect();
+      io?.disconnect();
+      document.removeEventListener("visibilitychange", sync);
       canvas.removeEventListener("pointermove", onMove);
       canvas.removeEventListener("pointerleave", onLeave);
       canvas.removeEventListener("click", onClick);
@@ -246,7 +256,7 @@ export default function NeuralAnchor() {
   }, []);
 
   return (
-    <div className="relative aspect-square w-full max-w-[480px]">
+    <div className="relative aspect-[16/10] w-full">
       <canvas
         ref={canvasRef}
         className="h-full w-full"

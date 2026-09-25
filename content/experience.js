@@ -23,7 +23,7 @@ export const education = {
   school: "Vellore Institute of Technology",
   years: "2022 – 2026",
   location: "Vellore, IN",
-  highlights: ["CGPA 8.16 / 10"],
+  highlights: ["CGPA 8.16 / 10", "Graduated August 2026"],
 };
 
 export const certifications = [

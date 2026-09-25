@@ -16,88 +16,83 @@ export default function Footer() {
   const next = pages[(i + 1) % pages.length];
 
   return (
-    <footer className="mt-32 border-t border-line">
-      <div className="mx-auto max-w-[1440px] px-6 py-14 lg:px-10">
-        <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
+    <footer
+      style={{ viewTransitionName: "site-footer" }}
+      className="mt-24 border-t-2 border-ink bg-paper lg:mt-32"
+    >
+      <div className="mx-auto max-w-[1400px] px-4 py-12 sm:px-6 lg:px-10">
+        <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
-            <Link
-              href="/"
-              className="font-mono text-[15px] transition-colors hover:text-ember"
-            >
-              <span className="text-bone">{site.wordmark}</span>
-            </Link>
-            <p className="mt-2 font-mono text-[13px] text-ash">
-              {site.tagline}
+            <p className="pixel text-[44px] leading-[0.9]">
+              Let&apos;s build
+              <br />
+              something<span className="text-accent">.</span>
             </p>
+            <p className="mt-4 max-w-[40ch] text-[15px] leading-relaxed text-mute">
+              Open to AI/ML, backend, full-stack and SDE roles. The fastest way
+              to reach me is email.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Link href={`mailto:${site.email}`} className="btn btn-primary">
+                {site.email}
+              </Link>
+            </div>
           </div>
 
-          <nav className="flex gap-7">
-            {nav.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="font-mono text-[13px] text-ash transition-colors hover:text-bone"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
+          <div>
+            <p className="label">Pages</p>
+            <ul className="mt-4 space-y-2">
+              {pages.map((p) => (
+                <li key={p.href}>
+                  <Link href={p.href} className="link">
+                    {p.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-          <div className="flex gap-6">
-            {socials.map((s) => (
-              <Link
-                key={s.label}
-                href={s.href}
-                target="_blank"
-                rel="noreferrer"
-                className="font-mono text-[13px] text-ash transition-colors hover:text-ember"
-              >
-                {s.label}
-              </Link>
-            ))}
+          <div>
+            <p className="label">Elsewhere</p>
+            <ul className="mt-4 space-y-2">
+              {socials.map((s) => (
+                <li key={s.label}>
+                  <Link
+                    href={s.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="link"
+                  >
+                    {s.label} ↗
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
+      </div>
 
-        <div className="mt-12 flex flex-col items-center gap-6 border-t border-line pt-7 sm:flex-row sm:justify-between">
-          <p className="font-mono text-[12px] text-ash">
-            © {new Date().getFullYear()} Kushagra
-          </p>
+      {/* Status bar */}
+      <div className="border-t-2 border-ink bg-sunk">
+        <div className="mx-auto flex max-w-[1400px] flex-wrap items-center justify-between gap-3 px-4 py-2 font-mono text-[12px] sm:px-6 lg:px-10">
+          <span className="border-2 border-ink bg-paper px-2 py-1">
+            © {new Date().getFullYear()} Kushagra Mishra
+          </span>
 
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-1.5">
             <Link
               href={prev.href}
               aria-label={`Previous page: ${prev.label}`}
-              className="font-mono text-[14px] text-ash transition-colors hover:text-bone"
+              className="border-2 border-ink bg-paper px-2 py-1 transition-colors hover:bg-accent"
             >
-              ←
+              ◄ {prev.label}
             </Link>
-
-            <Link href="/" aria-label="Home" className="group">
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 14 14"
-                fill="none"
-                className="text-ash transition-colors group-hover:text-ember"
-              >
-                <rect
-                  x="7"
-                  y="0.6"
-                  width="9"
-                  height="9"
-                  transform="rotate(45 7 0.6)"
-                  stroke="currentColor"
-                  strokeWidth="1"
-                />
-              </svg>
-            </Link>
-
             <Link
               href={next.href}
               aria-label={`Next page: ${next.label}`}
-              className="font-mono text-[14px] text-ash transition-colors hover:text-bone"
+              className="border-2 border-ink bg-paper px-2 py-1 transition-colors hover:bg-accent"
             >
-              →
+              {next.label} ►
             </Link>
           </div>
 
@@ -105,7 +100,7 @@ export default function Footer() {
             href={site.repoUrl}
             target="_blank"
             rel="noreferrer"
-            className="font-mono text-[12px] text-ash transition-colors hover:text-bone"
+            className="border-2 border-ink bg-paper px-2 py-1 transition-colors hover:bg-accent"
           >
             {site.buildStamp}
           </Link>
