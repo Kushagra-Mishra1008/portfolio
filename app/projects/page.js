@@ -1,4 +1,6 @@
 import ProjectRow from "@/components/projects/ProjectRow";
+import Container from "@/components/ui/Container";
+import Eyebrow from "@/components/ui/Eyebrow";
 import { projects } from "@/content/projects";
 
 export const metadata = {
@@ -9,29 +11,33 @@ export const metadata = {
 
 export default function ProjectsPage() {
   return (
-    <section className="mx-auto max-w-[1440px] px-6 pt-20 lg:px-10 lg:pt-24">
-      <h1 className="text-hero font-extrabold leading-[1.0] tracking-[-0.03em]">
-        Things I&apos;ve built,
-        <br />
-        end to end.
-      </h1>
+    <Container className="pt-14 lg:pt-20">
+      <section>
+        <Eyebrow>C:\Projects</Eyebrow>
 
-      <p className="mt-8 max-w-[56ch] text-[17px] leading-relaxed text-ash">
-        A transformer written from first principles, a retrieval platform for
-        documents, and a media library — each one shipped, running, and open
-        source.
-      </p>
+        <h1 className="pixel mt-8 text-hero leading-[0.84]">
+          Things I&apos;ve built,
+          <br />
+          <span className="hl">end to end.</span>
+        </h1>
 
-      <div className="mt-10 divide-y divide-line border-t border-line">
-        {projects.map((project, i) => (
-          <ProjectRow
-            key={project.slug}
-            project={project}
-            index={i}
-            reversed={i % 2 === 1}
-          />
-        ))}
-      </div>
-    </section>
+        <p className="mt-8 max-w-[56ch] text-[17px] leading-relaxed text-mute">
+          A transformer written from first principles, a retrieval platform for
+          documents, and a media library with a Spring Boot backend — each one
+          shipped, running, and open source.
+        </p>
+
+        <div className="mt-8 divide-y-2 divide-ink border-t-2 border-ink">
+          {projects.map((project, i) => (
+            <ProjectRow
+              key={project.slug}
+              project={project}
+              index={i}
+              reversed={i % 2 === 1}
+            />
+          ))}
+        </div>
+      </section>
+    </Container>
   );
 }
