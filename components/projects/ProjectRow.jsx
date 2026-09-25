@@ -64,9 +64,11 @@ export default function ProjectRow({ project, index, reversed }) {
           <Link href={href} className="btn btn-primary btn-sm">
             Read more →
           </Link>
-          <Link href={project.links.live} target="_blank" rel="noreferrer" className="btn btn-sm">
-            Live ↗
-          </Link>
+          {project.links.live && (
+            <Link href={project.links.live} target="_blank" rel="noreferrer" className="btn btn-sm">
+              Live ↗
+            </Link>
+          )}
           <Link href={project.links.source} target="_blank" rel="noreferrer" className="btn btn-dark btn-sm">
             Source ↗
           </Link>

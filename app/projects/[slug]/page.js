@@ -63,9 +63,11 @@ export default async function ProjectPage({ params }) {
         </p>
 
         <div className="mt-8 flex flex-wrap items-center gap-3">
-          <Link href={project.links.live} target="_blank" rel="noreferrer" className="btn btn-primary">
-            Live ↗
-          </Link>
+          {project.links.live && (
+            <Link href={project.links.live} target="_blank" rel="noreferrer" className="btn btn-primary">
+              Live ↗
+            </Link>
+          )}
           <Link href={project.links.source} target="_blank" rel="noreferrer" className="btn btn-dark">
             Source ↗
           </Link>

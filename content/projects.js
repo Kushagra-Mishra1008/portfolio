@@ -1,5 +1,37 @@
 export const projects = [
   {
+    slug: "review-swarm",
+    name: "Review Swarm",
+    year: "2026",
+    url: "github.com/Kushagra-Mishra1008/review_swarm",
+    tagline: "A multi-agent system that reviews GitHub pull requests",
+    description:
+      "Six agents across three tiers, coordinated by LangGraph, reviewing real pull requests inside an 8K tokens-per-minute free-tier budget. Evaluated against 19 merged scikit-learn PRs with human review comments, and benchmarked against a single-agent baseline to test whether the architecture earns its complexity.",
+    body: [
+      "A Review Lead triages each pull request and decides which specialists to wake — security, testing, performance, maintainability. Specialists decide which files are worth scanning, and cheap per-file workers on a smaller model do the narrow inspection in a separate rate-limit pool. Everything deterministic — routing, dedupe, ranking, diff parsing — is plain Python, and semgrep and ruff run first so their output reaches the specialists as evidence to judge rather than findings to trust.",
+      "The whole thing runs on Groq's free tier, so every LLM call goes through one gateway that owns a sliding-window token bucket, a daily ledger, a disk cache, cache-friendly prompt ordering, and a concurrency cap. Specialists fan out in parallel and the gateway quietly meters them. The full evaluation finished with zero 429s. Retrieval comes from a Repo Index MCP server I wrote: tree-sitter chunks, MiniLM embeddings in ChromaDB, and ripgrep exact-match merged by reciprocal rank fusion.",
+      "Measuring it was the most useful part. Against human review comments the swarm reached 17.3% precision versus 9.8% for a single-agent baseline, at lower recall and about 3.4x the tokens — and I report both sides. Building the eval harness also caught three bugs that all returned \"no issues found\" instead of failing: off-spec severity strings, reasoning-token exhaustion producing empty completions, and specialists selecting zero files. A silent pass is the worst failure mode a review tool can have.",
+    ],
+    highlights: [
+      "Hierarchical LangGraph swarm — lead, four specialists, per-file workers — on two model sizes with separate rate-limit pools.",
+      "Custom LLM gateway: token bucket, daily ledger, disk cache and concurrency cap. Zero 429s across the full eval run.",
+      "Authored a Repo Index MCP server with hybrid vector + ripgrep search; consumes the official GitHub and Filesystem MCP servers.",
+      "Eval harness over 19 scikit-learn PRs vs a single-agent baseline: 17.3% vs 9.8% precision, with caveats reported.",
+      "React + SSE frontend streaming the agent graph live, plus a static replay mode that needs no backend or tokens.",
+    ],
+    stack: ["LangGraph", "Python", "FastAPI", "MCP", "ChromaDB", "tree-sitter", "React", "Groq"],
+    metrics: [
+      { value: "17.3%", label: "precision vs 9.8% baseline" },
+      { value: "6 · 3", label: "agents · tiers" },
+    ],
+    status: "Open source",
+    image: "/shots/swarm.jpg",
+    links: {
+      live: null,
+      source: "https://github.com/Kushagra-Mishra1008/review_swarm",
+    },
+  },
+  {
     slug: "microgpt",
     name: "MicroGPT",
     year: "2026",
